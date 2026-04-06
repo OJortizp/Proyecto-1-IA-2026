@@ -8,6 +8,9 @@ const submitBtn = document.getElementById('submitBtn');
 const resultSection = document.getElementById('resultSection');
 const resultCategory = document.getElementById('resultCategory');
 const resultDetails = document.getElementById('resultDetails');
+const resultTicketId = document.getElementById('resultTicketId');
+const resultSubject = document.getElementById('resultSubject');
+const resultDescription = document.getElementById('resultDescription');
 
 function generateTicketId() {
     const timestamp = Date.now().toString().slice(-6);
@@ -15,8 +18,24 @@ function generateTicketId() {
     return `T-${timestamp}-${random}`;
 }
 
-function setTicketId() {
+function lockTicketGeneration() {
+    refreshIdBtn.disabled = true;
+    refreshIdBtn.title = 'Envía el ticket actual antes de generar un nuevo ID.';
+}
+
+function unlockTicketGeneration() {
+    refreshIdBtn.disabled = false;
+    refreshIdBtn.title = 'Genera un nuevo ID para cargar otro ticket.';
+}
+
+function assignNewTicketId() {
     ticketIdInput.value = generateTicketId();
+    lockTicketGeneration();
+}
+
+function clearFormFields() {
+    subjectInput.value = '';
+    descriptionInput.value = '';
 }
 
 function showAlert(message, type = 'error') {
@@ -39,7 +58,13 @@ async function classifyTicket(payload) {
         body: JSON.stringify(payload)
     });
 
-    const data = await response.json();
+    let data;
+    try {
+        data = await response.json();
+    } catch (error) {
+        data = {};
+    }
+
     if (!response.ok) {
         const errorMessage = data.error || 'No se pudo clasificar el ticket. Intenta de nuevo.';
         throw new Error(errorMessage);
@@ -51,10 +76,15 @@ async function classifyTicket(payload) {
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
     hideAlert();
-    resultSection.classList.add('hidden');
 
+    const ticketId = ticketIdInput.value.trim();
     const subject = subjectInput.value.trim();
     const description = descriptionInput.value.trim();
+
+    if (!ticketId) {
+        showAlert('Haz clic en "Nuevo ID" para generar un ticket antes de enviarlo.', 'error');
+        return;
+    }
 
     if (!subject && !description) {
         showAlert('Por favor ingresa al menos un asunto o una descripción.', 'error');
@@ -66,18 +96,23 @@ form.addEventListener('submit', async (event) => {
 
     try {
         const result = await classifyTicket({
-            ticket_id: ticketIdInput.value,
+            ticket_id: ticketId,
             subject,
             description
         });
 
         resultCategory.textContent = result.category;
-        resultDetails.textContent = result.ticket_id
-            ? `Ticket ${result.ticket_id} asignado a la categoría ${result.category}.`
-            : 'Clasificación completada correctamente.';
+        resultTicketId.textContent = result.ticket_id || ticketId;
+        resultSubject.textContent = subject || 'Sin asunto proporcionado.';
+        resultDescription.textContent = description || 'Sin descripción proporcionada.';
+        resultDetails.textContent = `El ticket fue asignado a la categoría ${result.category}.`;
 
         resultSection.classList.remove('hidden');
-        showAlert('Clasificación exitosa.', 'success');
+        showAlert('Ticket clasificado correctamente. Genera un nuevo ID para cargar otro.', 'success');
+
+        clearFormFields();
+        ticketIdInput.value = '';
+        unlockTicketGeneration();
     } catch (error) {
         showAlert(error.message, 'error');
     } finally {
@@ -87,9 +122,13 @@ form.addEventListener('submit', async (event) => {
 });
 
 refreshIdBtn.addEventListener('click', () => {
-    setTicketId();
+    if (refreshIdBtn.disabled) {
+        return;
+    }
+    assignNewTicketId();
+    clearFormFields();
     hideAlert();
-    resultSection.classList.add('hidden');
+    subjectInput.focus();
 });
 
-setTicketId();
+assignNewTicketId();
