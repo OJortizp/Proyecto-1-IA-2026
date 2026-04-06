@@ -1,4 +1,4 @@
-from naive_bayes import NaiveBayesMultinomial
+from Procesamiento.naive_bayes import NaiveBayesMultinomial
 
 # Ejemplo de dataset ya preprocesado (tokens + etiquetas)
 docs = [

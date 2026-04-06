@@ -1,4 +1,4 @@
-from naive_bayes import NaiveBayesMultinomial
+from Procesamiento.naive_bayes import NaiveBayesMultinomial
 
 # Cargar modelo entrenado
 modelo = NaiveBayesMultinomial.load("modelo.pkl")
