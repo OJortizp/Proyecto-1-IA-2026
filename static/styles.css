@@ -1,12 +1,16 @@
-﻿:root {
+:root {
     font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #0b1221;
-    background-color: #edf1f7;
-    --primary: #1d3a8a;
-    --primary-light: #2f4fb3;
-    --neutral: #5c667b;
-    --line: #e4e7ec;
-    --surface: #ffffff;
+    color: #e6ecff;
+    background-color: #050b17;
+    --primary: #3b78ff;
+    --primary-light: #63a8ff;
+    --primary-ultra: #f5f7ff;
+    --neutral: #c8d2ef;
+    --line: rgba(255, 255, 255, 0.15);
+    --surface: rgba(8, 19, 44, 0.92);
+    --surface-strong: rgba(17, 40, 92, 0.94);
+    --surface-soft: rgba(71, 110, 197, 0.35);
+    --glow: rgba(99, 164, 255, 0.35);
 }
 
 * {
@@ -16,14 +20,15 @@
 body {
     margin: 0;
     min-height: 100vh;
-    background: radial-gradient(circle at top, #fdfdfd 0%, #ecf0f5 45%, #dde3eb 100%);
+    background: radial-gradient(circle at 25% 20%, #1a2f63 0%, #0f1c3b 45%, #050b17 100%);
     color: var(--neutral);
 }
 
 main.container {
     max-width: 1040px;
     margin: 0 auto;
-    padding: 56px 24px 96px;
+    padding: 64px 24px 96px;
+    position: relative;
 }
 
 .hero {
@@ -31,48 +36,63 @@ main.container {
     align-items: flex-start;
     justify-content: space-between;
     gap: 32px;
-    padding: 32px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 25px 70px rgba(13, 23, 54, 0.08);
+    padding: 36px;
+    border-radius: 28px;
+    background: linear-gradient(130deg, rgba(18, 40, 92, 0.95), rgba(38, 94, 180, 0.82));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.55), 0 0 30px rgba(64, 114, 214, 0.35);
+    color: #fcfdff;
 }
 
 .hero h1 {
     margin: 6px 0;
-    font-size: 2.25rem;
-    color: #0b1221;
-    letter-spacing: -0.02em;
+    font-size: 2.45rem;
+    color: #ffffff;
+    letter-spacing: -0.015em;
 }
 
 .subtitle {
     margin: 0;
-    color: #5b6476;
+    color: rgba(255, 255, 255, 0.82);
     max-width: 560px;
     line-height: 1.6;
 }
 
 .eyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     font-size: 0.85rem;
-    color: var(--primary);
+    color: rgba(255, 255, 255, 0.8);
     margin: 0;
 }
 
 .card {
-    background: var(--surface);
-    border-radius: 22px;
-    padding: 28px;
-    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.07);
-    border: 1px solid var(--line);
-    margin-top: 28px;
+    position: relative;
+    z-index: 0;
+    background: linear-gradient(160deg, var(--surface), var(--surface-strong));
+    border-radius: 26px;
+    padding: 36px;
+    border: 1px solid var(--surface-soft);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow);
+    margin-top: 32px;
+    color: var(--primary-ultra);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 26px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    pointer-events: none;
+    z-index: -1;
 }
 
 form .form-row {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    margin-bottom: 22px;
 }
 
 .form-group {
@@ -80,34 +100,49 @@ form .form-row {
     min-width: 240px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    margin-bottom: 18px;
 }
 
 label {
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #1c2434;
+    margin-bottom: 0;
+    color: var(--primary-ultra);
+    letter-spacing: 0.01em;
 }
 
 input[type="text"],
 textarea {
-    border: 1px solid #d7dce5;
-    border-radius: 14px;
-    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    padding: 14px 18px;
     font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    color: #0b1221;
-    background: #fefefe;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    color: var(--primary-ultra);
+    background: rgba(5, 13, 30, 0.65);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 42px rgba(5, 9, 23, 0.55);
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+    color: rgba(245, 247, 255, 0.55);
 }
 
 input[type="text"]:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(47, 79, 179, 0.18);
+    box-shadow: 0 0 0 3px rgba(99, 164, 255, 0.25), 0 25px 40px rgba(9, 16, 35, 0.7);
+    transform: translateY(-1px);
 }
 
 textarea {
-    min-height: 170px;
+    min-height: 180px;
     line-height: 1.5;
 }
 
@@ -124,32 +159,34 @@ button {
 
 button.primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: #fff;
-    border-radius: 14px;
-    padding: 16px 28px;
+    color: #fefeff;
+    border-radius: 18px;
+    padding: 16px 32px;
     font-weight: 600;
     letter-spacing: 0.01em;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 20px 35px rgba(23, 58, 138, 0.6);
 }
 
 button.primary:disabled {
-    opacity: 0.7;
+    opacity: 0.65;
     cursor: not-allowed;
     box-shadow: none;
 }
 
 button.primary:not(:disabled):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 26px rgba(29, 58, 138, 0.35);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 26px 45px rgba(23, 58, 138, 0.75);
 }
 
 button.ghost {
-    background: #f0f2f8;
-    color: var(--primary);
-    border-radius: 12px;
-    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--primary-ultra);
+    border-radius: 14px;
+    padding: 12px 20px;
     font-weight: 600;
-    border: 1px solid #d7dce5;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 button.ghost:disabled {
@@ -158,23 +195,25 @@ button.ghost:disabled {
 }
 
 .alert {
-    margin: 14px 0;
-    padding: 14px 18px;
-    border-radius: 14px;
+    margin: 16px 0;
+    padding: 16px 20px;
+    border-radius: 16px;
     font-weight: 500;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(72, 106, 184, 0.28);
+    color: var(--primary-ultra);
 }
 
 .alert.error {
-    background: #fdecee;
-    color: #a0212f;
-    border-color: #f8c7cf;
+    background: rgba(208, 24, 66, 0.18);
+    color: #ffd7e0;
+    border-color: rgba(208, 24, 66, 0.4);
 }
 
 .alert.success {
-    background: #eaf7ef;
-    color: #17643f;
-    border-color: #c4ebd4;
+    background: rgba(24, 138, 96, 0.18);
+    color: #d6ffef;
+    border-color: rgba(24, 138, 96, 0.4);
 }
 
 .hidden {
@@ -182,41 +221,51 @@ button.ghost:disabled {
 }
 
 .result-category {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 700;
-    color: #0b1221;
-    margin-bottom: 12px;
+    color: #ffffff;
+    margin-bottom: 14px;
 }
 
 .result-meta {
     margin-top: 12px;
-    padding: 16px 18px;
-    border-radius: 16px;
-    background: #f9fbfe;
-    border: 1px solid #e1e6ef;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    padding: 20px 22px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .result-label {
     font-weight: 600;
-    color: #4b556b;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .result-text {
     margin: 4px 0 0;
-    color: #11182c;
+    color: var(--primary-ultra);
     white-space: pre-wrap;
 }
 
 .result-details {
-    color: #4c5873;
+    color: rgba(255, 255, 255, 0.84);
     margin-top: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-actions {
+    margin-top: 36px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 @media (max-width: 720px) {
     .hero {
         flex-direction: column;
-        padding: 24px;
+        padding: 28px;
     }
 
     .id-row {
@@ -225,5 +274,9 @@ button.ghost:disabled {
 
     button.ghost {
         width: 100%;
+    }
+
+    .form-actions {
+        justify-content: stretch;
     }
 }
