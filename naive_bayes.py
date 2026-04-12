@@ -45,10 +45,8 @@ class NaiveBayesMultinomial:
                                                    self.class_word_counts[c][word] + 1
                                            ) / (self.class_total_words[c] + vocab_size)
 
-    def predict(self, doc):
-        """
-        doc: documento ya tokenizado (lista de palabras)
-        """
+    def _compute_log_scores(self, doc):
+        """Devuelve los puntajes logarítmicos para cada clase."""
         scores = {}
         for c in self.classes:
             score = math.log(self.class_priors[c])
@@ -56,7 +54,25 @@ class NaiveBayesMultinomial:
                 if word in self.vocab:
                     score += math.log(self.word_probs[c][word])
             scores[c] = score
+        return scores
+
+    def predict(self, doc):
+        """
+        doc: documento ya tokenizado (lista de palabras)
+        """
+        scores = self._compute_log_scores(doc)
         return max(scores, key=scores.get)
+
+    def predict_proba(self, doc):
+        """Devuelve la probabilidad normalizada por clase para el documento dado."""
+        scores = self._compute_log_scores(doc)
+        if not scores:
+            return {}
+
+        max_log = max(scores.values())
+        exp_scores = {c: math.exp(score - max_log) for c, score in scores.items()}
+        total = sum(exp_scores.values()) or 1.0
+        return {c: exp_score / total for c, exp_score in exp_scores.items()}
 
     def save(self, filename="naive_bayes.pkl"):
         with open(filename, "wb") as f:
