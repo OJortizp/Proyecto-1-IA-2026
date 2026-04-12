@@ -12,6 +12,7 @@ const resultTicketId = document.getElementById('resultTicketId');
 const resultSubject = document.getElementById('resultSubject');
 const resultDescription = document.getElementById('resultDescription');
 const probabilitiesSection = document.getElementById('probabilitiesSection');
+const insightsColumn = document.getElementById('insightsColumn');
 const probabilitiesChart = document.getElementById('probabilitiesChart');
 
 function generateTicketId() {
@@ -49,6 +50,12 @@ function showAlert(message, type = 'error') {
 function hideAlert() {
     alertBox.classList.add('hidden');
     alertBox.textContent = '';
+}
+
+function ensureInsightsVisible() {
+    if (insightsColumn && insightsColumn.classList.contains('hidden')) {
+        insightsColumn.classList.remove('hidden');
+    }
 }
 
 function resetProbabilities() {
@@ -169,6 +176,7 @@ form.addEventListener('submit', async (event) => {
         resultDescription.textContent = description || 'Sin descripción proporcionada.';
         resultDetails.textContent = `El ticket fue asignado a la categoría ${result.category}.`;
 
+        ensureInsightsVisible();
         resultSection.classList.remove('hidden');
         renderProbabilities(result.probabilities);
         showAlert('Ticket clasificado correctamente. Genera un nuevo ID para cargar otro.', 'success');

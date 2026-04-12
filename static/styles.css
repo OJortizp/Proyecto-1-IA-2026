@@ -31,6 +31,32 @@ main.container {
     position: relative;
 }
 
+.grid-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.grid-column {
+    flex: 1 1 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.main-column {
+    order: 1;
+}
+
+.insights-column {
+    order: 2;
+}
+
+.insights-column.hidden {
+    display: none;
+}
+
 .hero {
     display: flex;
     align-items: flex-start;
@@ -74,7 +100,7 @@ main.container {
     padding: 36px;
     border: 1px solid var(--surface-soft);
     box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow);
-    margin-top: 32px;
+    margin-top: 0;
     color: var(--primary-ultra);
 }
 
