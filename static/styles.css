@@ -143,7 +143,10 @@ textarea:focus {
 
 textarea {
     min-height: 180px;
+    max-height: 420px;
     line-height: 1.5;
+    resize: vertical;
+    overflow: auto;
 }
 
 .id-row {
