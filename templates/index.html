@@ -9,22 +9,24 @@
 <body>
     <main class="container">
         <div class="grid-layout">
-            <div id="insightsColumn" class="grid-column insights-column hidden">
-                <section id="resultSection" class="card hidden">
+            <div id="insightsColumn" class="grid-column insights-column">
+                <section id="resultSection" class="card">
                     <h2>Resultado</h2>
-                    <p id="resultCategory" class="result-category"></p>
+                    <p id="resultCategory" class="result-category">Aún sin clasificación</p>
                     <div class="result-meta">
                         <p><span class="result-label">Ticket ID:</span> <span id="resultTicketId"></span></p>
                         <p><span class="result-label">Asunto:</span> <span id="resultSubject"></span></p>
                         <p><span class="result-label">Descripción:</span></p>
                         <p id="resultDescription" class="result-text"></p>
                     </div>
-                    <p id="resultDetails" class="result-details"></p>
+                    <p id="resultDetails" class="result-details">Clasifica un ticket para ver el resultado asignado.</p>
                 </section>
 
-                <section id="probabilitiesSection" class="card hidden probabilities-card">
+                <section id="probabilitiesSection" class="card probabilities-card">
                     <h2>Distribución de probabilidades</h2>
-                    <div id="probabilitiesChart" class="probabilities-chart"></div>
+                    <div id="probabilitiesChart" class="probabilities-chart">
+                        <p class="empty-state">Clasifica un ticket para ver la distribución de probabilidad.</p>
+                    </div>
                     <p class="probabilities-note">Los porcentajes corresponden al modelo Naive Bayes entrenado con tickets históricos.</p>
                 </section>
             </div>

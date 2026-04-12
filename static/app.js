@@ -14,6 +14,14 @@ const resultDescription = document.getElementById('resultDescription');
 const probabilitiesSection = document.getElementById('probabilitiesSection');
 const insightsColumn = document.getElementById('insightsColumn');
 const probabilitiesChart = document.getElementById('probabilitiesChart');
+const probabilitiesPlaceholder = 'Clasifica un ticket para ver la distribución de probabilidad.';
+const defaultResultState = {
+    category: 'Aún sin clasificación',
+    ticketId: '',
+    subject: '',
+    description: '',
+    details: 'Clasifica un ticket para ver el resultado asignado.'
+};
 
 function generateTicketId() {
     const timestamp = Date.now().toString().slice(-6);
@@ -31,9 +39,19 @@ function unlockTicketGeneration() {
     refreshIdBtn.title = 'Genera un nuevo ID para cargar otro ticket.';
 }
 
+function resetResultCard() {
+    resultCategory.textContent = defaultResultState.category;
+    resultTicketId.textContent = defaultResultState.ticketId;
+    resultSubject.textContent = defaultResultState.subject;
+    resultDescription.textContent = defaultResultState.description;
+    resultDetails.textContent = defaultResultState.details;
+}
+
 function assignNewTicketId() {
     ticketIdInput.value = generateTicketId();
     lockTicketGeneration();
+    resetResultCard();
+    resetProbabilities();
 }
 
 function clearFormFields() {
@@ -58,13 +76,15 @@ function ensureInsightsVisible() {
     }
 }
 
+function showProbabilitiesPlaceholder() {
+    if (!probabilitiesChart) {
+        return;
+    }
+    probabilitiesChart.innerHTML = `<p class="empty-state">${probabilitiesPlaceholder}</p>`;
+}
+
 function resetProbabilities() {
-    if (probabilitiesChart) {
-        probabilitiesChart.innerHTML = '';
-    }
-    if (probabilitiesSection) {
-        probabilitiesSection.classList.add('hidden');
-    }
+    showProbabilitiesPlaceholder();
 }
 
 function formatPercentage(value) {
