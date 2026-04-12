@@ -56,6 +56,12 @@
             </div>
             <p id="resultDetails" class="result-details"></p>
         </section>
+
+        <section id="probabilitiesSection" class="card hidden probabilities-card">
+            <h2>Distribución de probabilidades</h2>
+            <div id="probabilitiesChart" class="probabilities-chart"></div>
+            <p class="probabilities-note">Los porcentajes corresponden al modelo Naive Bayes entrenado con tickets históricos.</p>
+        </section>
     </main>
 
     <script defer src="{{ url_for('static', filename='app.js') }}"></script>

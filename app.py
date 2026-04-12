@@ -18,12 +18,13 @@ def api_predict():
     if not subject and not description:
         return jsonify({'error': 'Ingresa al menos un asunto o descripción para clasificar el ticket.'}), 400
 
-    categoria = clasificador.predecir(subject, description)
+    categoria, probabilidades = clasificador.predecir(subject, description)
     response = {
         'ticket_id': ticket_id or None,
         'subject': subject,
         'description': description,
-        'category': categoria
+        'category': categoria,
+        'probabilities': probabilidades
     }
     return jsonify(response)
 

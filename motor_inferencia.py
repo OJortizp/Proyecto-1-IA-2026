@@ -27,15 +27,19 @@ class ClasificadorTickets:
         return tokens_limpios
 
     def predecir(self, asunto, descripcion):
-        """Recibe texto crudo de la web, lo limpia y devuelve la categoría."""
+        """Recibe texto crudo de la web, lo limpia y devuelve la categoría y sus probabilidades."""
         texto_completo = f"{asunto} {descripcion}"
         tokens = self.limpiar_texto(texto_completo)
-        
+
+        probabilidades = self.modelo.predict_proba(tokens)
+
         # Evitar fallos si el usuario envía texto vacío o puros símbolos
         if not tokens:
-            return "Consulta General" # Categoría por defecto
-            
-        return self.modelo.predict(tokens)
+            categoria = "Consulta General"  # Categoría por defecto
+        else:
+            categoria = max(probabilidades, key=probabilidades.get)
+
+        return categoria, probabilidades
 
 # Bloque de prueba
 if __name__ == "__main__":

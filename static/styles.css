@@ -259,6 +259,61 @@ button.ghost:disabled {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.probabilities-card h2 {
+    margin-top: 0;
+}
+
+.probabilities-chart {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.probability-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.probability-label {
+    min-width: 160px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.probability-bar {
+    flex: 1;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    position: relative;
+}
+
+.probability-bar-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    box-shadow: 0 10px 25px rgba(59, 120, 255, 0.45);
+    transition: width 0.35s ease;
+}
+
+.probability-value {
+    width: 70px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--primary-ultra);
+}
+
+.probabilities-note {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
 .form-actions {
     margin-top: 36px;
     display: flex;
@@ -281,5 +336,19 @@ button.ghost:disabled {
 
     .form-actions {
         justify-content: stretch;
+    }
+
+    .probability-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .probability-label,
+    .probability-value {
+        width: auto;
+    }
+
+    .probability-bar {
+        width: 100%;
     }
 }
