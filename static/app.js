@@ -14,14 +14,36 @@ const resultDescription = document.getElementById('resultDescription');
 const probabilitiesSection = document.getElementById('probabilitiesSection');
 const insightsColumn = document.getElementById('insightsColumn');
 const probabilitiesChart = document.getElementById('probabilitiesChart');
-const probabilitiesPlaceholder = 'Clasifica un ticket para ver la distribución de probabilidad.';
+const probabilitiesPlaceholder = 'Classify a ticket to see the probability distribution.';
 const defaultResultState = {
-    category: 'Aún sin clasificación',
+    category: 'Not classified yet',
     ticketId: '',
     subject: '',
     description: '',
-    details: 'Clasifica un ticket para ver el resultado asignado.'
+    details: 'Classify a ticket to see the assigned result.'
 };
+
+function localizeCategory(category) {
+    const normalized = (category || '').trim();
+    if (!normalized) {
+        return normalized;
+    }
+
+    const map = {
+        'Soporte Técnico': 'Technical Support',
+        'Soporte Tecnico': 'Technical Support',
+        'Facturación': 'Billing',
+        'Facturacion': 'Billing',
+        'Queja': 'Complaint',
+        'Queja': 'Complaint',
+        'Cancelación': 'Cancellation',
+        'Cancelacion': 'Cancellation',
+        'Consulta General': 'General Inquiry',
+        'Consulta general': 'General Inquiry'
+    };
+
+    return map[normalized] || normalized;
+}
 
 function generateTicketId() {
     const timestamp = Date.now().toString().slice(-6);
@@ -31,12 +53,12 @@ function generateTicketId() {
 
 function lockTicketGeneration() {
     refreshIdBtn.disabled = true;
-    refreshIdBtn.title = 'Envía el ticket actual antes de generar un nuevo ID.';
+    refreshIdBtn.title = 'Submit the current ticket before generating a new ID.';
 }
 
 function unlockTicketGeneration() {
     refreshIdBtn.disabled = false;
-    refreshIdBtn.title = 'Genera un nuevo ID para cargar otro ticket.';
+    refreshIdBtn.title = 'Generate a new ID to start another ticket.';
 }
 
 function resetResultCard() {
@@ -114,7 +136,7 @@ function renderProbabilities(probabilities) {
 
             const name = document.createElement('span');
             name.className = 'probability-label';
-            name.textContent = label;
+            name.textContent = localizeCategory(label);
 
             const bar = document.createElement('div');
             bar.className = 'probability-bar';
@@ -154,7 +176,7 @@ async function classifyTicket(payload) {
     }
 
     if (!response.ok) {
-        const errorMessage = data.error || 'No se pudo clasificar el ticket. Intenta de nuevo.';
+        const errorMessage = data.error || 'Could not classify the ticket. Please try again.';
         throw new Error(errorMessage);
     }
 
@@ -171,17 +193,17 @@ form.addEventListener('submit', async (event) => {
     const description = descriptionInput.value.trim();
 
     if (!ticketId) {
-        showAlert('Haz clic en "Nuevo ID" para generar un ticket antes de enviarlo.', 'error');
+        showAlert('Click "New ID" to generate a ticket before submitting.', 'error');
         return;
     }
 
     if (!subject && !description) {
-        showAlert('Por favor ingresa al menos un asunto o una descripción.', 'error');
+        showAlert('Please enter at least a subject or a description.', 'error');
         return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Clasificando...';
+    submitBtn.textContent = 'Classifying...';
 
     try {
         const result = await classifyTicket({
@@ -190,16 +212,17 @@ form.addEventListener('submit', async (event) => {
             description
         });
 
-        resultCategory.textContent = result.category;
+        const displayCategory = localizeCategory(result.category);
+        resultCategory.textContent = displayCategory;
         resultTicketId.textContent = result.ticket_id || ticketId;
-        resultSubject.textContent = subject || 'Sin asunto proporcionado.';
-        resultDescription.textContent = description || 'Sin descripción proporcionada.';
-        resultDetails.textContent = `El ticket fue asignado a la categoría ${result.category}.`;
+        resultSubject.textContent = subject || 'No subject provided.';
+        resultDescription.textContent = description || 'No description provided.';
+        resultDetails.textContent = `The ticket was assigned to category ${displayCategory}.`;
 
         ensureInsightsVisible();
         resultSection.classList.remove('hidden');
         renderProbabilities(result.probabilities);
-        showAlert('Ticket clasificado correctamente. Genera un nuevo ID para cargar otro.', 'success');
+        showAlert('Ticket classified successfully. Generate a new ID to start another one.', 'success');
 
         clearFormFields();
         ticketIdInput.value = '';
@@ -208,7 +231,7 @@ form.addEventListener('submit', async (event) => {
         showAlert(error.message, 'error');
     } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Clasificar ticket';
+        submitBtn.textContent = 'Classify ticket';
     }
 });
 

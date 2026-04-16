@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clasificación Automática de Tickets</title>
+    <title>Automatic Ticket Classification</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -11,32 +11,32 @@
         <div class="grid-layout">
             <div id="insightsColumn" class="grid-column insights-column">
                 <section id="resultSection" class="card">
-                    <h2>Resultado</h2>
-                    <p id="resultCategory" class="result-category">Aún sin clasificación</p>
+                    <h2>Result</h2>
+                    <p id="resultCategory" class="result-category">Not classified yet</p>
                     <div class="result-meta">
                         <p><span class="result-label">Ticket ID:</span> <span id="resultTicketId"></span></p>
-                        <p><span class="result-label">Asunto:</span> <span id="resultSubject"></span></p>
-                        <p><span class="result-label">Descripción:</span></p>
+                        <p><span class="result-label">Subject:</span> <span id="resultSubject"></span></p>
+                        <p><span class="result-label">Description:</span></p>
                         <p id="resultDescription" class="result-text"></p>
                     </div>
-                    <p id="resultDetails" class="result-details">Clasifica un ticket para ver el resultado asignado.</p>
+                    <p id="resultDetails" class="result-details">Classify a ticket to see the assigned result.</p>
                 </section>
 
                 <section id="probabilitiesSection" class="card probabilities-card">
-                    <h2>Distribución de probabilidades</h2>
+                    <h2>Probability distribution</h2>
                     <div id="probabilitiesChart" class="probabilities-chart">
-                        <p class="empty-state">Clasifica un ticket para ver la distribución de probabilidad.</p>
+                        <p class="empty-state">Classify a ticket to see the probability distribution.</p>
                     </div>
-                    <p class="probabilities-note">Los porcentajes corresponden al modelo Naive Bayes entrenado con tickets históricos.</p>
+                    <p class="probabilities-note">Percentages come from a Naive Bayes model trained on historical tickets.</p>
                 </section>
             </div>
 
             <div class="grid-column main-column">
                 <header class="hero">
                     <div>
-                        <p class="eyebrow">Mesa de Ayuda · IA</p>
-                        <h1>Clasificador Naive Bayes de Solicitudes</h1>
-                        <p class="subtitle">Ingresa los detalles del ticket y deja que el modelo determine el área correspondiente.</p>
+                        <p class="eyebrow">Help Desk · AI</p>
+                        <h1>Naive Bayes Request Classifier</h1>
+                        <p class="subtitle">Enter ticket details and let the model choose the most likely category.</p>
                     </div>
                 </header>
 
@@ -44,27 +44,27 @@
                     <form id="ticketForm" novalidate>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="ticketId">ID del Ticket</label>
+                                <label for="ticketId">Ticket ID</label>
                                 <div class="id-row">
                                     <input type="text" id="ticketId" name="ticket_id" readonly>
-                                    <button type="button" id="refreshId" class="ghost">Nuevo ID</button>
+                                    <button type="button" id="refreshId" class="ghost">New ID</button>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subject">Asunto</label>
-                                <input type="text" id="subject" name="subject" placeholder="Ej. Problemas para acceder a mi cuenta">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" placeholder="e.g., Trouble signing into my account">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="description">Descripción</label>
-                            <textarea id="description" name="description" rows="6" placeholder="Describe el ticket con la mayor cantidad de detalles posible..."></textarea>
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" rows="6" placeholder="Describe the ticket with as much detail as possible..."></textarea>
                         </div>
 
                         <div id="alertBox" class="alert hidden"></div>
 
                         <div class="form-actions">
-                            <button type="submit" class="primary" id="submitBtn">Clasificar ticket</button>
+                            <button type="submit" class="primary" id="submitBtn">Classify ticket</button>
                         </div>
                     </form>
                 </section>

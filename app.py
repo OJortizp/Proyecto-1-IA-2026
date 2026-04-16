@@ -16,7 +16,7 @@ def api_predict():
     ticket_id = (data.get('ticket_id') or '').strip()
 
     if not subject and not description:
-        return jsonify({'error': 'Ingresa al menos un asunto o descripción para clasificar el ticket.'}), 400
+        return jsonify({'error': 'Please enter at least a subject or a description to classify the ticket.'}), 400
 
     categoria, probabilidades = clasificador.predecir(subject, description)
     response = {
