@@ -54,7 +54,7 @@ python motor_inferencia.py
 
 - `app.py`: servidor Flask y rutas (`/` y `/api/predict`)
 - `motor_inferencia.py`: limpieza de texto + carga del modelo + predicción
-- `naive_bayes.py`: implementación del Naive Bayes Multinomial (custom)
+- `naive_bayes.py`: implementación del Naive Bayes Multinomial
 - `templates/` y `static/`: UI web
 - `modelo_final.pkl`: modelo entrenado serializado
-- `Procesamiento.ipynb`: notebook de procesamiento/entrenamiento (si aplica)
+- `Procesamiento.ipynb`: notebook de procesamiento/entrenamiento 
