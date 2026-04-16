@@ -1,4 +1,4 @@
-# Proyecto 1 IA 2026 — Clasificación automática de tickets (Naive Bayes + Flask)
+# Proyecto 1 IA 2026 — Clasificación automática de tickets
 
 Este repositorio implementa un **clasificador de tickets de soporte** usando un modelo **Naive Bayes Multinomial** entrenado previamente y guardado en `modelo_final.pkl`. Incluye una **aplicación web** (Flask) para ingresar el asunto y la descripción del ticket, y ver la **categoría predicha** junto con su **distribución de probabilidades**.
 
